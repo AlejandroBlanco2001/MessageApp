@@ -1,6 +1,5 @@
 const createUser = async (_, { input }, { models }) => {
-    const user = await models.User.create(input);
-    return user;
+    return await models.User.create(input);
 };
 
 const updateUser = async (_, { id, input }, { models }) => {

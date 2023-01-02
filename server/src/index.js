@@ -15,8 +15,6 @@ const server = new ApolloServer({
     context: { models },
 });
 
-console.log(server);
-
 server.listen({ port: port }).then(({ url }) => {
     console.log(`Server is running on ${url}`);
 });
