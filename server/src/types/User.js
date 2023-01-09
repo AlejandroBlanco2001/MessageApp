@@ -34,6 +34,8 @@ module.exports = gql`
         "Update a user"
         updateUser(username: String, email: String!, password: String!): User!
         "Delete a user"
-        deleteUser(id: ID!): User!
+        deleteUser(id: ID!): Boolean!
+        "Delete a user by email"
+        deleteUserEmail(email: String!): Boolean!
     }
 `;

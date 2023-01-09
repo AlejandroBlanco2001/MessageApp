@@ -1,4 +1,9 @@
-const { createUser, deleteUser, updateUser } = require("./userMutations");
+const {
+    createUser,
+    deleteUser,
+    updateUser,
+    deleteUserEmail,
+} = require("./userMutations");
 const { createMessage } = require("./messageMutations");
 const { createChat, updateChat, deleteChat } = require("./chatMutations");
 
@@ -10,4 +15,5 @@ module.exports = {
     createChat,
     updateChat,
     deleteChat,
+    deleteUserEmail,
 };

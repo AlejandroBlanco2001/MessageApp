@@ -22,7 +22,7 @@ module.exports = gql`
 
     type Mutation {
         "Create a new chat"
-        createChat: Chat!
+        createChat(users: [String!]!): Chat!
         "Update a chat"
         updateChat(id: ID!): Chat!
         "Delete a chat"
