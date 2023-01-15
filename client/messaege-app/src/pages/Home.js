@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, Input, Button } from "@chakra-ui/react";
 import { useLazyQuery } from "@apollo/client";
 import { GET_USERNAME_EMAIL } from "../querys";
+import swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 const logo_image = require("../assets/logo.png");
@@ -23,7 +24,22 @@ const Home = () => {
         console.log(
             `Sending (${formData.email}, ${formData.password}) to server`
         );
-        getUsername({ variables: { ...formData } });
+        getUsername(
+            { variables: { ...formData } },
+            {
+                onCompleted: (data) => {
+                    navigate("/main");
+                },
+                onError: (error) => {
+                    console.log(error);
+                    swal.fire(
+                        "Error",
+                        "El usuario o la contraseña son incorrectos",
+                        "error"
+                    );
+                },
+            }
+        );
     };
 
     return (

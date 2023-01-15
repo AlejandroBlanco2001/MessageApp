@@ -1,4 +1,11 @@
+const bcrypt = require("bcrypt");
+const { generateJWT } = require("../../utils");
+
 const createUser = async (_, input, { models }) => {
+    const salt = await bcrypt.genSalt(10);
+    let token = null;
+    const hashedPassword = await bcrypt.hash(input.password, salt);
+    input.password = hashedPassword;
     return await models.User.create(input);
 };
 

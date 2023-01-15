@@ -1,4 +1,10 @@
-const { user, users, userUsername, userEmail } = require("./userQueries");
+const {
+    user,
+    users,
+    userUsername,
+    userEmail,
+    loginUser,
+} = require("./userQueries");
 const {
     message,
     messages,
@@ -14,6 +20,7 @@ module.exports = {
     users,
     userUsername,
     userEmail,
+    loginUser,
     message,
     messages,
     userMessages,

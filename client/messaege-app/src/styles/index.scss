@@ -1,8 +1,12 @@
 @import url('./fonts.scss');
 
-body{
+*{
     margin: 0;
     font-family: 'Raleway', sans-serif;
+}
+
+a{
+    color: #0088CC !important;
 }
 
 img {

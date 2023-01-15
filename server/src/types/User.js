@@ -13,6 +13,8 @@ module.exports = gql`
         friends: [User]
         "List of chats"
         chats: [Chat]
+        "Token of the account"
+        token: String
         "Unique identifier of the account"
         id: ID!
     }
@@ -26,6 +28,8 @@ module.exports = gql`
         userUsername(username: String!): User!
         "Get a user by email"
         userEmail(email: String!): User!
+        "Login a user"
+        loginUser(email: String!, password: String!): User!
     }
 
     type Mutation {

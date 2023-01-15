@@ -1,5 +1,6 @@
 require("dotenv").config();
 const { ApolloServer } = require("apollo-server");
+const { contextObject } = require("./utils");
 const connectDB = require("./config/db");
 const models = require("./models");
 const typeDefs = require("./types");
@@ -12,7 +13,7 @@ connectDB();
 const server = new ApolloServer({
     typeDefs: typeDefs,
     resolvers: resolvers,
-    context: { models },
+    context: { models, contextObject },
 });
 
 server.listen({ port: port }).then(({ url }) => {
