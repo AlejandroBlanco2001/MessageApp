@@ -1,5 +1,13 @@
 import { gql } from "@apollo/client";
 
+const LOGIN = gql`
+    query Query($email: String!, $password: String!) {
+        loginUser(email: $email, password: $password) {
+            token
+        }
+    }
+`;
+
 const GET_USERNAME_EMAIL = gql`
     query UserEmail($email: String!) {
         userEmail(email: $email) {
@@ -20,4 +28,4 @@ const CREATE_USER = gql`
     }
 `;
 
-export { CREATE_USER, GET_USERNAME_EMAIL };
+export { CREATE_USER, GET_USERNAME_EMAIL, LOGIN };

@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Box, Input, Button } from "@chakra-ui/react";
+import { Stack, Box, Input, Button, Image } from "@chakra-ui/react";
 import { useLazyQuery } from "@apollo/client";
-import { GET_USERNAME_EMAIL } from "../querys";
+import { LOGIN } from "../querys";
+import Cookies from "universal-cookie";
 import swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
@@ -9,8 +10,8 @@ const logo_image = require("../assets/logo.png");
 
 const Home = () => {
     const [formData, setFormData] = useState({ username: "", password: "" });
-    const [getUsername, { loading, error, data }] =
-        useLazyQuery(GET_USERNAME_EMAIL);
+    const [login] = useLazyQuery(LOGIN);
+    const Cookie = new Cookies();
 
     const navigate = useNavigate();
     const handleInputChange = (event) => {
@@ -21,60 +22,96 @@ const Home = () => {
     };
     const handleLogin = (event) => {
         event.preventDefault();
+        if (formData.email === "" || formData.password === "") {
+            swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Por favor, rellena todos los campos!",
+            });
+            return;
+        }
         console.log(
             `Sending (${formData.email}, ${formData.password}) to server`
         );
-        getUsername(
-            { variables: { ...formData } },
-            {
-                onCompleted: (data) => {
-                    navigate("/main");
-                },
-                onError: (error) => {
-                    console.log(error);
-                    swal.fire(
-                        "Error",
-                        "El usuario o la contraseña son incorrectos",
-                        "error"
-                    );
-                },
-            }
-        );
+        login({
+            variables: { ...formData },
+            fetchPolicy: "no-cache",
+            onCompleted: (data) => {
+                console.log(data);
+                Cookie.set("token", data.loginUser.token);
+                swal.fire({
+                    icon: "success",
+                    title: "Bienvenido!",
+                    text: "Iniciaste sesión correctamente!",
+                }).then((res) => {
+                    if (res.isConfirmed) navigate("/chat");
+                });
+            },
+            onError: (error) => {
+                if (error.graphQLErrors[0].message === "User not found") {
+                    swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Usuario no encontrado o contraseña incorrecta!",
+                    });
+                } else {
+                    swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Algo salió mal!",
+                    });
+                }
+            },
+        });
     };
 
     return (
-        <Box display="flex" flexDirection="column" alignItems="center">
-            <Box>
-                <img src={logo_image} alt="logo" />
-            </Box>
-            <Box display="flex" flexDirection="column" gap="20px">
-                <Input
-                    onChange={handleInputChange}
-                    name="email"
-                    variant="flushed"
-                    placeholder="Email"
-                    type="email"
-                    textAlign="center"
-                    width="300px"
+        <Stack display="flex" flexDirection="row">
+            <Box id="home_main_image_container" width="40%"></Box>
+            <Box
+                width="60%"
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+            >
+                <Image
+                    src={logo_image}
+                    alt="logo"
+                    boxSize="200px"
+                    objectFit="cover"
                 />
-                <Input
-                    onChange={handleInputChange}
-                    name="password"
-                    variant="flushed"
-                    placeholder="Password"
-                    type="password"
-                    textAlign="center"
-                    width="300px"
-                />
-                <Button onClick={handleLogin}>Login</Button>
-                <span
-                    style={{ textAlign: "center" }}
-                    onClick={() => navigate("/signup")}
-                >
-                    Crear una cuenta
-                </span>
+                <Box display="flex" flexDirection="column" gap="20px">
+                    <Input
+                        onChange={handleInputChange}
+                        name="email"
+                        variant="flushed"
+                        placeholder="Email"
+                        type="email"
+                        textAlign="center"
+                        width="300px"
+                        height="50px"
+                    />
+                    <Input
+                        onChange={handleInputChange}
+                        name="password"
+                        variant="flushed"
+                        placeholder="Password"
+                        type="password"
+                        textAlign="center"
+                        width="300px"
+                        height="50px"
+                    />
+                    <Button onClick={handleLogin}>Login</Button>
+                    <span
+                        style={{ textAlign: "center" }}
+                        onClick={() => navigate("/signup")}
+                    >
+                        Crear una cuenta
+                    </span>
+                </Box>
             </Box>
-        </Box>
+        </Stack>
     );
 };
 

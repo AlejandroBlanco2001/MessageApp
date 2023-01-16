@@ -121,7 +121,7 @@ const SignUp = () => {
 
     return (
         <Stack display="flex" flexDirection="row">
-            <Box id="sign_up_image_container" width="40%" bg="red"></Box>
+            <Box id="sign_up_image_container" width="40%"></Box>
             <VStack
                 width="60%"
                 height="100vh"

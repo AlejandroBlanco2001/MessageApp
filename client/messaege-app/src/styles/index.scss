@@ -26,3 +26,11 @@ img {
     background-repeat: no-repeat;
     background-position-x: -240px;
 }
+
+#home_main_image_container{
+    background-image: url('../assets/main_image.jpg') !important;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: -240px;
+}
