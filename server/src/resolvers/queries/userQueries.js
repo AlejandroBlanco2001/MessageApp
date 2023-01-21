@@ -18,7 +18,6 @@ const loginUser = async (_, { email, password }, { models }) => {
     if (!user) {
         throw new Error("User not found");
     }
-    console.log(user);
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
         throw new Error("Invalid password");

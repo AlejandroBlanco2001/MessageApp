@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { ApolloServer } = require("apollo-server");
-const { contextObject } = require("./utils");
+const { verifyJwt } = require("./utils");
 const connectDB = require("./config/db");
 const models = require("./models");
 const typeDefs = require("./types");
@@ -11,9 +11,16 @@ const port = process.env.PORT || 4000;
 connectDB();
 
 const server = new ApolloServer({
+    cors: {
+        origin: "http://localhost:3000",
+        credentials: true,
+    },
     typeDefs: typeDefs,
     resolvers: resolvers,
-    context: { models, contextObject },
+    context: ({ req }) => ({
+        models: models,
+        auth: verifyJwt(req.headers["cookie"]),
+    }),
 });
 
 server.listen({ port: port }).then(({ url }) => {

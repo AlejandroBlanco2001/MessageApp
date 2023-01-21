@@ -17,7 +17,7 @@ module.exports = gql`
         "Get a chat by id"
         chat(id: ID!): Chat!
         "Get all the chats of a user"
-        chatUser(userID: ID!): [Chat!]!
+        chatUser: [Chat!]!
     }
 
     type Mutation {

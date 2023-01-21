@@ -15,28 +15,15 @@ const generateJWT = (payload) => {
     });
 };
 
-const verifyJwt = (jwtToken, secret) => {
-    return new Promise((resolve, reject) => {
-        jwt.verify(jwtToken, secret, (err, decoded) => {
-            if (err) {
-                reject(err);
-            }
-            resolve(decoded);
-        });
-    });
-};
-
-const contextObject = async ({ req }) => {
-    const values = req.headers.authorization.split("");
-    let verified = null;
+const verifyJwt = (jwtToken) => {
+    let token = jwtToken.split("=")[1].split(";")[0];
+    let data = {};
     try {
-        verified = await verifyJwt(values[1], jwtSecret);
+        data = jwt.verify(token, jwtSecret);
     } catch (err) {
-        console.log(err);
-        throw new AuthenticationError("Invalid token");
+        throw new Error("USER NOT AUTHORIZED");
     }
-
-    return true;
+    return data;
 };
 
-module.exports = { generateJWT, verifyJwt, contextObject };
+module.exports = { generateJWT, verifyJwt };
