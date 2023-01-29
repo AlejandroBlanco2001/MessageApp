@@ -16,14 +16,16 @@ const generateJWT = (payload) => {
 };
 
 const verifyJwt = (jwtToken) => {
-    let token = jwtToken.split("=")[1].split(";")[0];
-    let data = {};
-    try {
-        data = jwt.verify(token, jwtSecret);
-    } catch (err) {
-        throw new Error("USER NOT AUTHORIZED");
+    if (jwtToken !== undefined) {
+        let token = jwtToken.split("=")[1].split(";")[0];
+        let data = {};
+        try {
+            data = jwt.verify(token, jwtSecret);
+        } catch (err) {
+            throw new Error("USER NOT AUTHORIZED");
+        }
+        return data;
     }
-    return data;
 };
 
 module.exports = { generateJWT, verifyJwt };

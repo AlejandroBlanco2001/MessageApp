@@ -7,7 +7,6 @@ const chat = async (_, { id }, { models }) => {
 };
 
 const chatUser = async (_, {}, { models, auth }) => {
-    console.log(auth);
     if (auth === {}) throw new Error("USER NOT AUTHORIZED");
     return await models.Chat.find({ users: { $all: [auth.id] } });
 };

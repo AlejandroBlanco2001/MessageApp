@@ -4,7 +4,14 @@ import { Stack } from "@chakra-ui/react";
 
 const Chat = ({}) => {
     return (
-        <Stack>
+        <Stack
+            display="flex"
+            direction="row"
+            bg="red"
+            height="100vh"
+            justifyContent="center"
+            alignItems="center"
+        >
             <ChatBar></ChatBar>
             <ChatDisplay></ChatDisplay>
         </Stack>
