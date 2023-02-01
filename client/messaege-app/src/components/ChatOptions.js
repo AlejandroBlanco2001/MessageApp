@@ -11,6 +11,7 @@ const ChatOptions = ({}) => {
             alignItems="center"
             bg="white"
             width="100%"
+            height="10%"
         >
             <Tooltip label="Search a chat">
                 <ChatSearch></ChatSearch>

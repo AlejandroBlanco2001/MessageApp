@@ -1,9 +1,10 @@
-import { Box } from "@chakra-ui/react";
-
-const ChatDisplay = ({}) => {
+import { Box, Text} from "@chakra-ui/react";
+const ChatDisplay = ({username}) => {
     return (
         <Box bg="yellow" height="70%" width="50%">
-            <p>Chat Display</p>
+            <Box bg="white" height="10%" width="100%" textAlign="center">
+                <Text>{username}</Text>
+            </Box>
         </Box>
     );
 };

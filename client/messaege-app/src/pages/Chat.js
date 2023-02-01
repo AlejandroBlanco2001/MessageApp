@@ -13,7 +13,7 @@ const Chat = ({}) => {
             alignItems="center"
         >
             <ChatBar></ChatBar>
-            <ChatDisplay></ChatDisplay>
+            <ChatDisplay username="Prueba"></ChatDisplay>
         </Stack>
     );
 };
